@@ -1,0 +1,23 @@
+.list * {
+  display: block;
+}
+
+.list {
+  list-style: none;
+}
+
+.list .list__item .title {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 19px;
+}
+
+.list .list__item .title::before {
+  content: "+";
+  display: inline-block;
+  width: 10px;
+}
+
+.list .list__item.active > .title::before {
+  content: "-";
+}
