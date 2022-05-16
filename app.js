@@ -48,25 +48,27 @@ const arrayOfData = [
 ];
 
 const List = ({ data }) => {
-  const [isActive, SetIsActive] = React.useState(false);
+  const [isActive, setIsActive] = React.useState(false);
 
-  const children =
-    data.children && data.children.length ? (
-      <ul className="list">
-        {data.children.map((item, index) => (
-          <List data={item} key={index} />
-        ))}
-      </ul>
-    ) : null;
+  const children = data.children && data.children.length && (
+    <ul className="list">
+      {data.children.map((item, index) => (
+        <List data={item} key={index} />
+      ))}
+    </ul>
+  );
 
   return (
     <li className={"list__item " + (isActive ? "active" : "")}>
-      <span onClick={() => SetIsActive(!isActive)} className="title">
+      <span onClick={() => setIsActive(!isActive)} className="title">
         {data.title}
       </span>
       {isActive && (
         <React.Fragment>
-          <span className="descr">{data.descr}</span>
+          <span
+            className="descr"
+            dangerouslySetInnerHTML={{ __html: data.descr }}
+          />
           {children}
         </React.Fragment>
       )}
@@ -74,14 +76,14 @@ const List = ({ data }) => {
   );
 };
 
-const App = () => {
+const App = ({ data }) => {
   return (
     <ul className="list">
-      {arrayOfData.map((item, index) => (
+      {data.map((item, index) => (
         <List data={item} key={index} />
       ))}
     </ul>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App data={arrayOfData} />, document.getElementById("app"));
